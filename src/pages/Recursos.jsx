@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Document, Page, pdfjs } from "react-pdf";
 import { TIPOS } from "../types/types";
 import ConfigColorIcon from "../utils/ConfigColorIcon";
+import { AES } from 'crypto-js';
 
 const Recursos = () => {
   /* OBTENEMOS EL TIPO DE CATEGORIA */
@@ -163,6 +164,12 @@ const Recursos = () => {
       Sin Registros
     </div>
   );
+  
+  const encryptId = (data) => {
+    const encryptedData = AES.encrypt(JSON.stringify(data), import.meta.env.VITE_APP_ENCRYPT).toString();
+    return encodeURIComponent(encryptedData); // Codifica el resultado antes de usarlo en una URL
+  };
+
 
   useEffect(() => {
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -231,7 +238,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${TIPOS.SERVICIOS}/${item.serv_id}`}
+                            to={`/detalle/${TIPOS.SERVICIOS}/${encryptId(item.serv_id)}`}
                           >
                             <img
                               style={{ height: "400px" }}
@@ -255,7 +262,7 @@ const Recursos = () => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${TIPOS.SERVICIOS}/${item.serv_id}`}
+                                  to={`/detalle/${TIPOS.SERVICIOS}/${encryptId(item.serv_id)}`}
                                 >
                                   <span>{institucion_iniciales}</span>
                                 </NavLink>{" "}
@@ -263,7 +270,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${TIPOS.SERVICIOS}/${item.serv_id}`}
+                                  to={`/detalle/${TIPOS.SERVICIOS}/${encryptId(item.serv_id)}`}
                                 >
                                   {TIPOS.SERVICIOS}
                                 </NavLink>{" "}
@@ -273,7 +280,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${TIPOS.SERVICIOS}/${item.serv_id}`}
+                                to={`/detalle/${TIPOS.SERVICIOS}/${encryptId(item.serv_id)}`}
                               >
                                 {item.serv_nombre}
                               </NavLink>
@@ -281,7 +288,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${TIPOS.SERVICIOS}/${item.serv_id}`}
+                              to={`/detalle/${TIPOS.SERVICIOS}/${encryptId(item.serv_id)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -306,7 +313,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${item.ofertas_id}`}
+                            to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${encryptId(item.ofertas_id)}`}
                           >
                             <img
                               style={{ height: "400px" }}
@@ -336,7 +343,7 @@ const Recursos = () => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${item.ofertas_id}`}
+                                  to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${encryptId(item.ofertas_id)}`}
                                 >
                                   <span>{institucion_iniciales}</span>
                                 </NavLink>{" "}
@@ -344,7 +351,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${item.ofertas_id}`}
+                                  to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${encryptId(item.ofertas_id)}`}
                                 >
                                   {TIPOS.OFERTAS_ACADEMICAS}
                                 </NavLink>{" "}
@@ -354,7 +361,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${item.ofertas_id}`}
+                                to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${encryptId(item.ofertas_id)}`}
                               >
                                 {item.ofertas_titulo}
                               </NavLink>
@@ -362,7 +369,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${item.ofertas_id}`}
+                              to={`/detalle/${TIPOS.OFERTAS_ACADEMICAS}/${encryptId(item.ofertas_id)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -387,7 +394,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${TIPOS.PUBLICACIONES}/${item.publicaciones_id}`}
+                            to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
                           >
                             <img
                               src={`${
@@ -411,7 +418,7 @@ const Recursos = () => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${TIPOS.PUBLICACIONES}/${item.publicaciones_id}`}
+                                  to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
                                 >
                                   <span>{item.publicaciones_autor}</span>
                                 </NavLink>{" "}
@@ -419,7 +426,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${TIPOS.PUBLICACIONES}/${item.publicaciones_id}`}
+                                  to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
                                 >
                                   {TIPOS.PUBLICACIONES}
                                 </NavLink>{" "}
@@ -429,7 +436,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${TIPOS.PUBLICACIONES}/${item.publicaciones_id}`}
+                                to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
                               >
                                 {item.publicaciones_titulo}
                               </NavLink>
@@ -437,7 +444,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${TIPOS.PUBLICACIONES}/${item.publicaciones_id}`}
+                              to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -462,7 +469,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${TIPOS.GACETAS}/${item.gaceta_id}`}
+                            to={`/detalle/${TIPOS.GACETAS}/${encryptId(item.gaceta_id)}`}
                           >
                             <Document
                               className="pdf"
@@ -487,7 +494,7 @@ const Recursos = () => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${TIPOS.GACETAS}/${item.gaceta_id}`}
+                                  to={`/detalle/${TIPOS.GACETAS}/${encryptId(item.gaceta_id)}`}
                                 >
                                   <span>{institucion_iniciales}</span>
                                 </NavLink>{" "}
@@ -495,7 +502,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${TIPOS.GACETAS}/${item.gaceta_id}`}
+                                  to={`/detalle/${TIPOS.GACETAS}/${encryptId(item.gaceta_id)}`}
                                 >
                                   {TIPOS.GACETAS}
                                 </NavLink>{" "}
@@ -505,7 +512,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${TIPOS.GACETAS}/${item.gaceta_id}`}
+                                to={`/detalle/${TIPOS.GACETAS}/${encryptId(item.gaceta_id)}`}
                               >
                                 {item.gaceta_titulo}
                               </NavLink>
@@ -513,7 +520,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${TIPOS.GACETAS}/${item.gaceta_id}`}
+                              to={`/detalle/${TIPOS.GACETAS}/${encryptId(item.gaceta_id)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -538,7 +545,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${TIPOS.EVENTOS}/${item.evento_id}`}
+                            to={`/detalle/${TIPOS.EVENTOS}/${encryptId(item.evento_id)}`}
                           >
                             <img
                               style={{ height: "400px" }}
@@ -562,7 +569,7 @@ const Recursos = () => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${TIPOS.EVENTOS}/${item.evento_id}`}
+                                  to={`/detalle/${TIPOS.EVENTOS}/${encryptId(item.evento_id)}`}
                                 >
                                   <span>{institucion_iniciales}</span>
                                 </NavLink>{" "}
@@ -570,7 +577,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${TIPOS.EVENTOS}/${item.evento_id}`}
+                                  to={`/detalle/${TIPOS.EVENTOS}/${encryptId(item.evento_id)}`}
                                 >
                                   {TIPOS.EVENTOS}
                                 </NavLink>{" "}
@@ -580,7 +587,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${TIPOS.EVENTOS}/${item.evento_id}`}
+                                to={`/detalle/${TIPOS.EVENTOS}/${encryptId(item.evento_id)}`}
                               >
                                 {item.evento_titulo}
                               </NavLink>
@@ -588,7 +595,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${TIPOS.EVENTOS}/${item.evento_id}`}
+                              to={`/detalle/${TIPOS.EVENTOS}/${encryptId(item.evento_id)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -613,7 +620,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${TIPOS.VIDEOS}/${item.video_id}`}
+                            to={`/detalle/${TIPOS.VIDEOS}/${encryptId(item.video_id)}`}
                           >
                             <iframe
                               width="560" // Ancho deseado
@@ -631,7 +638,7 @@ const Recursos = () => {
                               {/* <li className="post-date"><strong>{item.date}</strong> <span>{item.month}</span> </li> */}
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${TIPOS.VIDEOS}/${item.video_id}`}
+                                  to={`/detalle/${TIPOS.VIDEOS}/${encryptId(item.video_id)}`}
                                 >
                                   <span>{institucion_iniciales}</span>
                                 </NavLink>{" "}
@@ -639,7 +646,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${TIPOS.VIDEOS}/${item.video_id}`}
+                                  to={`/detalle/${TIPOS.VIDEOS}/${encryptId(item.video_id)}`}
                                 >
                                   {TIPOS.VIDEOS}
                                 </NavLink>{" "}
@@ -649,7 +656,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${TIPOS.VIDEOS}/${item.video_id}`}
+                                to={`/detalle/${TIPOS.VIDEOS}/${encryptId(item.video_id)}`}
                               >
                                 {item.video_titulo}
                               </NavLink>
@@ -657,7 +664,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${TIPOS.VIDEOS}/${item.video_id}`}
+                              to={`/detalle/${TIPOS.VIDEOS}/${encryptId(item.video_id)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -700,7 +707,7 @@ const Recursos = () => {
     );
   }
 
-  // CONVOCATORIAS - COMUNICADOS - AVISOS
+  // CONVOCATORIAS - COMUNICADOS - AVISOS - CURSOS - SEMINARIOS
   if (
     !loading_institucion &&
     !loading_static_data &&
@@ -764,7 +771,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${cat}/${item.idconvocatorias}`}
+                            to={`/detalle/${cat}/${encryptId(item.idconvocatorias)}`}
                           >
                             <img
                               style={{ height: "400px" }}
@@ -788,7 +795,7 @@ const Recursos = () => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${cat}/${item.idconvocatorias}`}
+                                  to={`/detalle/${cat}/${encryptId(item.idconvocatorias)}`}
                                 >
                                   <span>
                                     {
@@ -801,7 +808,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${cat}/${item.idconvocatorias}`}
+                                  to={`/detalle/${cat}/${encryptId(item.idconvocatorias)}`}
                                 >
                                   {institucion_iniciales}
                                 </NavLink>{" "}
@@ -811,7 +818,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${cat}/${item.idconvocatorias}`}
+                                to={`/detalle/${cat}/${encryptId(item.idconvocatorias)}`}
                               >
                                 {item.con_titulo}
                               </NavLink>
@@ -819,7 +826,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${cat}/${item.idconvocatorias}`}
+                              to={`/detalle/${cat}/${encryptId(item.idconvocatorias)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -844,7 +851,7 @@ const Recursos = () => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${cat}/${item.iddetalle_cursos_academicos}`}
+                            to={`/detalle/${cat}/${encryptId(item.iddetalle_cursos_academicos)}`}
                           >
                             <img
                               style={{ height: "400px" }}
@@ -868,7 +875,7 @@ const Recursos = () => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${cat}/${item.iddetalle_cursos_academicos}`}
+                                  to={`/detalle/${cat}/${encryptId(item.iddetalle_cursos_academicos)}`}
                                 >
                                   <span>
                                     {
@@ -881,7 +888,7 @@ const Recursos = () => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${cat}/${item.iddetalle_cursos_academicos}`}
+                                  to={`/detalle/${cat}/${encryptId(item.iddetalle_cursos_academicos)}`}
                                 >
                                   {institucion_iniciales}
                                 </NavLink>{" "}
@@ -891,7 +898,7 @@ const Recursos = () => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${cat}/${item.iddetalle_cursos_academicos}`}
+                                to={`/detalle/${cat}/${encryptId(item.iddetalle_cursos_academicos)}`}
                               >
                                 {item.det_titulo}
                               </NavLink>
@@ -899,7 +906,7 @@ const Recursos = () => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${cat}/${item.iddetalle_cursos_academicos}`}
+                              to={`/detalle/${cat}/${encryptId(item.iddetalle_cursos_academicos)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { getConvocatorias, getCursos, getEventos, getGacetas, getInstitucion, getLinksInstExtAll, getOfertasAcademicas, getPublicaciones, getServicios, getVideos } from '../../api/institucionAPI';
 import { useQuery } from '@tanstack/react-query';
 import { TIPOS } from '../../types/types';
-
+import { AES } from 'crypto-js';
 const BlogSidebar = ({tipo}) => {
 
     /* OBTENCION DE INFORMACION DEL STORE API INSTITUCION*/
@@ -82,6 +82,11 @@ const BlogSidebar = ({tipo}) => {
         return `${día} de ${mes} de ${año}`;
     }
 
+    const encryptId = (data) => {
+        const encryptedData = AES.encrypt(JSON.stringify(data), import.meta.env.VITE_APP_ENCRYPT).toString();
+        return encodeURIComponent(encryptedData); // Codifica el resultado antes de usarlo en una URL
+    };
+
     if(
         !loading_convocatorias &&
         !loading_cursos &&
@@ -105,7 +110,7 @@ const BlogSidebar = ({tipo}) => {
         const seminarios_cat = cursos.filter((e) => e.tipo_curso_otro.tipo_conv_curso_nombre === TIPOS.SEMINARIOS);
 
         const ultimosServicios = servicios.slice(0, 3).map((item) => {
-            return <NavLink key={item.serv_id} to={`/detalle?id=${item.serv_id}&tipo=${tipo}`}>
+            return <NavLink key={item.serv_id} to={`/detalle/${tipo}/${encryptId(item.serv_id)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Carrera/Servicios/${item.serv_imagen}`} alt=""/>
@@ -126,7 +131,7 @@ const BlogSidebar = ({tipo}) => {
         });
 
         const ultimosOfertas = ofertas.slice(0, 3).map((item) => {
-            return <NavLink key={item.ofertas_id} to={`/detalle?id=${item.ofertas_id}&tipo=${tipo}`}>
+            return <NavLink key={item.ofertas_id} to={`/detalle/${tipo}/${encryptId(item.ofertas_id)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Carrera/OfertasAcademicas/${item.ofertas_imagen}`} alt=""/>
@@ -147,7 +152,7 @@ const BlogSidebar = ({tipo}) => {
         });
         
         const ultimosPublicaciones = publicaciones.slice(0, 3).map((item) => {
-            return <NavLink key={item.publicaciones_id} to={`/detalle?id=${item.publicaciones_id}&tipo=${tipo}`}>
+            return <NavLink key={item.publicaciones_id} to={`/detalle/${tipo}/${encryptId(item.publicaciones_id)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Publicaciones/${item.publicaciones_imagen}`} alt=""/>
@@ -168,7 +173,7 @@ const BlogSidebar = ({tipo}) => {
         });
 
         const ultimosEventos = eventos.slice(0, 3).map((item) => {
-            return <NavLink key={item.evento_id} to={`/detalle?id=${item.evento_id}&tipo=${tipo}`}>
+            return <NavLink key={item.evento_id} to={`/detalle/${tipo}/${item.evento_id}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Eventos/${item.evento_imagen}`} alt=""/>
@@ -189,7 +194,7 @@ const BlogSidebar = ({tipo}) => {
         });
 
         const ultimosVideos = videos.slice(0, 3).map((item) => {
-            return <NavLink key={item.video_id} to={`/detalle?id=${item.video_id}&tipo=${tipo}`}>
+            return <NavLink key={item.video_id} to={`/detalle/${tipo}/${item.video_id}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <iframe
@@ -211,7 +216,7 @@ const BlogSidebar = ({tipo}) => {
         });
 
         const ultimosConvocatorias = convocatorias_cat.slice(0, 3).map((item) => {
-            return <NavLink  key={item.idconvocatorias} to={`/detalle?id=${item.idconvocatorias}&tipo=${tipo}`}>
+            return <NavLink  key={item.idconvocatorias} to={`/detalle/${tipo}/${encryptId(item.idconvocatorias)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Convocatorias/${item.con_foto_portada}`} alt=""/>
@@ -232,7 +237,7 @@ const BlogSidebar = ({tipo}) => {
         });        
 
         const ultimosComunicados = comunicados_cat.slice(0, 3).map((item) => {
-            return <NavLink key={item.idconvocatorias} to={`/detalle?id=${item.idconvocatorias}&tipo=${tipo}`}>
+            return <NavLink key={item.idconvocatorias} to={`/detalle/${tipo}/${encryptId(item.idconvocatorias)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Convocatorias/${item.con_foto_portada}`} alt=""/>
@@ -253,7 +258,7 @@ const BlogSidebar = ({tipo}) => {
         });
 
         const ultimosAvisos = avisos_cat.slice(0, 3).map((item) => {
-            return <NavLink key={item.idconvocatorias} to={`/detalle?id=${item.idconvocatorias}&tipo=${tipo}`}>
+            return <NavLink key={item.idconvocatorias} to={`/detalle/${tipo}/${encryptId(item.idconvocatorias)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Convocatorias/${item.con_foto_portada}`} alt=""/>
@@ -274,7 +279,7 @@ const BlogSidebar = ({tipo}) => {
         });
 
         const ultimosCursos = cursos_cat.slice(0, 3).map((item) => {
-            return <NavLink key={item.iddetalle_cursos_academicos} to={`/detalle?id=${item.iddetalle_cursos_academicos}&tipo=${tipo}`}>
+            return <NavLink key={item.iddetalle_cursos_academicos} to={`/detalle/${tipo}/${encryptId(item.iddetalle_cursos_academicos)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Cursos/${item.det_img_portada}`} alt=""/>
@@ -295,7 +300,7 @@ const BlogSidebar = ({tipo}) => {
         });
 
         const ultimosSeminarios = seminarios_cat.slice(0, 3).map((item) => {
-            return <NavLink key={item.iddetalle_cursos_academicos} to={`/detalle?id=${item.iddetalle_cursos_academicos}&tipo=${tipo}`}>
+            return <NavLink key={item.iddetalle_cursos_academicos} to={`/detalle/${tipo}/${encryptId(item.iddetalle_cursos_academicos)}`}>
                     <div className="widget-post clearfix">
                         <div className="sx-post-media">
                             <img style={{height: '120px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Cursos/${item.det_img_portada}`} alt=""/>
@@ -386,13 +391,13 @@ const BlogSidebar = ({tipo}) => {
                     <div className="widget widget_tag_cloud">
                         <h4 className="widget-title">Otras Consultas</h4>
                         <div className="tagcloud p-a10 bg-white">
-                            <NavLink to={"/academia?tipo=calendario"}>Calendario Académico</NavLink>
-                            <NavLink to={"/academia?tipo=horario"}>Horario</NavLink>
-                            <NavLink to={"/academia?tipo=planEstudio"}>Plan de Estudio</NavLink>
-                            <NavLink to={"/academia?tipo=reglamento"}>Reglamento mod. De graduación</NavLink>
-                            <NavLink to={"/institucion?tipo=convenios"}>Convenios Institucionales</NavLink>
-                            <NavLink to={"/institucion?tipo=pasantias"}>Pasantías</NavLink>
-                            <NavLink to={"/institucion?tipo=trabajos"}>Trabajos Dirigidos</NavLink>
+                            <NavLink to={`/academia/${TIPOS.CALENDARIO}`}>Calendario Académico</NavLink>
+                            <NavLink to={`/academia/${TIPOS.HORARIO}`}>Horario</NavLink>
+                            <NavLink to={`/academia/${TIPOS.PLANESTUDIO}`}>Plan de Estudio</NavLink>
+                            <NavLink to={`/academia/${TIPOS.REGLAMENTO}`}>Reglamento mod. De graduación</NavLink>
+                            <NavLink to={`/institucion/${TIPOS.CONVENIOS}`}>Convenios Institucionales</NavLink>
+                            <NavLink to={`/institucion/${TIPOS.PASANTIAS}`}>Pasantías</NavLink>
+                            <NavLink to={`/institucion/${TIPOS.TRABAJOS}`}>Trabajos Dirigidos</NavLink>
                         </div>
                     </div>
                 </div>

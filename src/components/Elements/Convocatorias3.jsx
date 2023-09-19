@@ -12,6 +12,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { TIPOS } from "../../types/types";
 import bgimg1 from "../../images/background/cross-line2.png";
+import { AES } from 'crypto-js';
 
 const Convocatorias3 = ({ tipo }) => {
   /* OBTENCION DE INFORMACION DEL STORE API */
@@ -37,6 +38,11 @@ const Convocatorias3 = ({ tipo }) => {
     queryKey: ["cursos"],
     queryFn: getCursos,
   });
+
+  const encryptId = (data) => {
+    const encryptedData = AES.encrypt(JSON.stringify(data), import.meta.env.VITE_APP_ENCRYPT).toString();
+    return encodeURIComponent(encryptedData); // Codifica el resultado antes de usarlo en una URL
+  };
 
   if (
     !loading_institucion &&
@@ -146,7 +152,7 @@ const Convocatorias3 = ({ tipo }) => {
                           />
                           <div className="figcaption">
                             <NavLink
-                              to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                              to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                               style={{
                                 background: "var(--color-primario)",
                                 color: "#fff",
@@ -161,14 +167,14 @@ const Convocatorias3 = ({ tipo }) => {
                         <div className="project-info p-a20 bg-gray">
                           <h4 className="sx-tilte m-t0">
                             <NavLink
-                              to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                              to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                             >
                               {item.con_titulo}
                             </NavLink>
                           </h4>
                           <p>{institucion_nombre}</p>
                           <NavLink
-                            to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                            to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                           >
                             <i className="link-plus bg-primary" />
                           </NavLink>
@@ -288,7 +294,7 @@ const Convocatorias3 = ({ tipo }) => {
                           />
                           <div className="figcaption">
                             <NavLink
-                              to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                              to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                               style={{
                                 background: "var(--color-primario)",
                                 color: "#fff",
@@ -303,14 +309,14 @@ const Convocatorias3 = ({ tipo }) => {
                         <div className="project-info p-a20 bg-gray">
                           <h4 className="sx-tilte m-t0">
                             <NavLink
-                              to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                              to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                             >
                               {item.det_titulo}
                             </NavLink>
                           </h4>
                           <p>{institucion_nombre}</p>
                           <NavLink
-                            to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                            to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                           >
                             <i className="link-plus bg-primary" />
                           </NavLink>

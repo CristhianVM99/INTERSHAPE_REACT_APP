@@ -109,7 +109,7 @@ const Categorias1 = () => {
               <div className="counter-blocks">
                 <div className="row">
                   <div className="col-xl-3 col-md-6 m-b30 ">
-                    <NavLink to={`/recursos?tipo=${TIPOS.CONVOCATORIAS}`}>
+                    <NavLink to={`/recursos/${TIPOS.CONVOCATORIAS}`}>
                       <div
                         className="sx-count text-white sx-icon-box-wraper bg-repeat p-a30"
                         style={{
@@ -142,7 +142,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.COMUNICADOS}`}>
+                    <NavLink to={`/recursos/${TIPOS.COMUNICADOS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat p-a30"
                         style={{
@@ -174,7 +174,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.AVISOS}`}>
+                    <NavLink to={`/recursos/${TIPOS.AVISOS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat p-a30"
                         style={{
@@ -203,7 +203,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.CURSOS}`}>
+                    <NavLink to={`/recursos/${TIPOS.CURSOS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat p-a30"
                         style={{
@@ -232,7 +232,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.SEMINARIOS}`}>
+                    <NavLink to={`/recursos/${TIPOS.SEMINARIOS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat p-a30"
                         style={{
@@ -261,7 +261,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.SERVICIOS}`}>
+                    <NavLink to={`/recursos/${TIPOS.SERVICIOS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat  p-a30"
                         style={{
@@ -291,7 +291,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.OFERTAS_ACADEMICAS}`}>
+                    <NavLink to={`/recursos/${TIPOS.OFERTAS_ACADEMICAS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat  p-a30"
                         style={{
@@ -322,7 +322,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.PUBLICACIONES}`}>
+                    <NavLink to={`/recursos/${TIPOS.PUBLICACIONES}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat  p-a30"
                         style={{
@@ -353,7 +353,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.GACETAS}`}>
+                    <NavLink to={`/recursos/${TIPOS.GACETAS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat  p-a30"
                         style={{
@@ -383,7 +383,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.EVENTOS}`}>
+                    <NavLink to={`/recursos/${TIPOS.EVENTOS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat  p-a30"
                         style={{
@@ -413,7 +413,7 @@ const Categorias1 = () => {
                     </NavLink>
                   </div>
                   <div className="col-xl-3 col-md-6 m-b30">
-                    <NavLink to={`/recursos?tipo=${TIPOS.VIDEOS}`}>
+                    <NavLink to={`/recursos/${TIPOS.VIDEOS}`}>
                       <div
                         className="sx-count  text-white sx-icon-box-wraper bg-repeat  p-a30"
                         style={{

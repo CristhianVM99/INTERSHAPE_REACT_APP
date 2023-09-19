@@ -163,7 +163,7 @@ const Principal = () => {
             <Categorias4 /> 
                   
             {/* COMPONENTE => CURSOS */}
-            <Convocatorias4 tipo={TIPOS.CONVOCATORIAS}/>                       
+            <Convocatorias4 tipo={TIPOS.CURSOS}/>                       
             </div>
           <Footer />
           </div>

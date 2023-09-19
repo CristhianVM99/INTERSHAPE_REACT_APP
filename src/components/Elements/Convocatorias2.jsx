@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { TIPOS } from '../../types/types';
 import bgimg1 from "../../images/background/bg-5.png"
 import bgimg3 from "../../images/background/cross-line2.png"
+import { AES } from 'crypto-js';
 
 const Convocatorias2 = ({tipo}) => {
 
@@ -37,6 +38,11 @@ const Convocatorias2 = ({tipo}) => {
         queryKey: ['cursos'],
         queryFn: getCursos,
     });
+
+    const encryptId = (data) => {
+        const encryptedData = AES.encrypt(JSON.stringify(data), import.meta.env.VITE_APP_ENCRYPT).toString();
+        return encodeURIComponent(encryptedData); // Codifica el resultado antes de usarlo en una URL
+    };
 
     if(!loading_convocatorias && !loading_static_data && !loading_institucion && !loading_images  && tipo===TIPOS.CONVOCATORIAS){
 
@@ -81,7 +87,7 @@ const Convocatorias2 = ({tipo}) => {
                         <div className="section-content">
                             <div className="row number-block-one-outer justify-content-center">
                                 <div className="col-lg-4 col-md-6 col-sm-6 m-b30">
-                                    {lastConvocatoria && <NavLink to={`/detalle/${lastConvocatoria.tipo_conv_comun.tipo_conv_comun_titulo}/${lastConvocatoria.idconvocatorias}`}>
+                                    {lastConvocatoria && <NavLink to={`/detalle/${lastConvocatoria.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(lastConvocatoria.idconvocatorias)}`}>
                                     <div className="number-block-one animate-in-to-top">
                                         <img src={`${import.meta.env.VITE_APP_ROOT_API}/Convocatorias/${lastConvocatoria.con_foto_portada}`} alt="" />
                                         <div className="figcaption bg-white text-center p-a20">
@@ -94,7 +100,7 @@ const Convocatorias2 = ({tipo}) => {
                                     </NavLink>}
                                 </div>
                                 <div className="col-lg-4 col-md-6 col-sm-6 m-b30">
-                                    {lastComunicado && <NavLink to={`/detalle/${lastComunicado.tipo_conv_comun.tipo_conv_comun_titulo}/${lastComunicado.idconvocatorias}`}>
+                                    {lastComunicado && <NavLink to={`/detalle/${lastComunicado.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(lastComunicado.idconvocatorias)}`}>
                                     <div className="number-block-one animate-in-to-top">
                                         <img src={`${import.meta.env.VITE_APP_ROOT_API}/Convocatorias/${lastComunicado.con_foto_portada}`} alt="" />
                                         <div className="figcaption bg-white text-center p-a20">
@@ -107,7 +113,7 @@ const Convocatorias2 = ({tipo}) => {
                                     </NavLink>}
                                 </div>
                                 <div className="col-lg-4 col-md-6 col-sm-6 m-b30">
-                                    {lastAviso && <NavLink to={`/detalle/${lastAviso.tipo_conv_comun.tipo_conv_comun_titulo}/${lastAviso.idconvocatorias}`}>
+                                    {lastAviso && <NavLink to={`/detalle/${lastAviso.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(lastAviso.idconvocatorias)}`}>
                                     <div className="number-block-one animate-in-to-top">
                                         <img src={`${import.meta.env.VITE_APP_ROOT_API}/Convocatorias/${lastAviso.con_foto_portada}`} alt="" />
                                         <div className="figcaption bg-white text-center p-a20">
@@ -168,7 +174,7 @@ const Convocatorias2 = ({tipo}) => {
                             <div className="row number-block-one-outer justify-content-center">
                                 <div className="col-lg-2"></div>
                                 {lastCurso && <div className="col-lg-4 col-md-6 col-sm-6 m-b30">
-                                    <NavLink to={`/detalle/${lastCurso.tipo_curso_otro.tipo_conv_curso_nombre}/${lastCurso.iddetalle_cursos_academicos}`}>
+                                    <NavLink to={`/detalle/${lastCurso.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(lastCurso.iddetalle_cursos_academicos)}`}>
                                         <div className="number-block-one animate-in-to-top">
                                         <img src={`${import.meta.env.VITE_APP_ROOT_API}/Cursos/${lastCurso.det_img_portada}`} alt="" />
                                         <div className="figcaption bg-white text-center p-a20">
@@ -181,7 +187,7 @@ const Convocatorias2 = ({tipo}) => {
                                     </NavLink>                                    
                                 </div>}                               
                                 {lastSeminario && <div className="col-lg-4 col-md-6 col-sm-6 m-b30">
-                                    <NavLink to={`/detalle/${lastSeminario.tipo_curso_otro.tipo_conv_curso_nombre}/${lastSeminario.iddetalle_cursos_academicos}`}>
+                                    <NavLink to={`/detalle/${lastSeminario.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(lastSeminario.iddetalle_cursos_academicos)}`}>
                                     <div className="number-block-one animate-in-to-top">
                                         <img src={`${import.meta.env.VITE_APP_ROOT_API}/Cursos/${lastSeminario.det_img_portada}`} alt="" />
                                         <div className="figcaption bg-white text-center p-a20">

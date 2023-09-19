@@ -10,6 +10,8 @@ import { useQuery } from '@tanstack/react-query';
 import { TIPOS } from '../types/types';
 import LoadScript from '../utils/LoadScripts';
 import ConfigColorIcon from '../utils/ConfigColorIcon';
+import { AES } from 'crypto-js';
+import { enc } from 'crypto-js'; 
 
 const Detalle = () =>{   
 
@@ -98,44 +100,30 @@ const Detalle = () =>{
         return `${día} de ${mes} de ${año}`;
     }
 
-    /* FUNCION PARA OBTENER EL DIA DE UNA FECHA  */
-    // function obtenerDiaDeFecha(fechaISO) {
-    //     const fecha = new Date(fechaISO);
-    //     const dia = fecha.getDate();
-    //     return dia;
-    // }
-
-    /* FUNCION PARA OBTENER EL MES DE UNA FECHA */
-    // function obtenerMesDeFecha(fechaISO) {
-    //     const mesesDelAnio = [
-    //         "ENE", "FEB", "MAR", "ABR",
-    //         "MAY", "JUN", "JUL", "AGO",
-    //         "SEP", "OCT", "NOV", "DIC"
-    //     ];
-    
-    //     const fecha = new Date(fechaISO);
-    //     const mesIndex = fecha.getMonth();
-    //     const mesReducido = mesesDelAnio[mesIndex];
-    
-    //     return mesReducido;
-    // }
-
-    /* FUNCION PARA OBTENER EL DIA DE UNA FECHA */
-    // function obtenerDiaDeFecha2(fechaString) {
-    //     const fecha = new Date(fechaString);
-    //     const dia = fecha.getDate();
-    //     return dia;
-    //   }
+    function convertirHora(hora24) {
+        // Divide la hora en horas, minutos y segundos
+        const [hora, minutos] = hora24.split(':');
+        
+        // Convierte la hora en un número entero
+        const horaNum = parseInt(hora, 10);
       
-    /* FUNCION PARA OBTENER EL MES DE UNA FECHA */  
-    // function obtenerMesDeFecha2(fechaString) {
-    //     const fecha = new Date(fechaString);
-    //     const meses = [
-    //     "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"
-    //     ];
-    //     const mes = fecha.getMonth(); // Obtiene el mes (0-11)
-    //     return meses[mes];
-    // }         
+        // Determina si es AM o PM
+        const periodo = horaNum >= 12 ? 'PM' : 'AM';
+      
+        // Calcula la hora en el formato de 12 horas
+        const hora12 = horaNum > 12 ? horaNum - 12 : horaNum === 0 ? 12 : horaNum;
+      
+        // Formatea la hora con minutos y AM/PM
+        const horaFormateada = `${hora12}:${minutos} ${periodo}`;
+      
+        return horaFormateada;
+    }      
+
+    const decryptId = (encryptedData) => {
+        const decodedData = decodeURIComponent(encryptedData); // Decodifica la entrada si es una URL
+        const decrypted = AES.decrypt(decodedData, import.meta.env.VITE_APP_ENCRYPT).toString(enc.Utf8);
+        return JSON.parse(decrypted); // Parsea la cadena JSON descifrada
+    };          
 
     useEffect(() => {
 
@@ -170,7 +158,7 @@ const Detalle = () =>{
             portada
         } = institucion
 
-        const item = servicios.find((e) => e.serv_id === parseInt(id,10)) 
+        const item = servicios.find((e) => e.serv_id === parseInt(decryptId(id),10)) 
         
         const indiceAleatorio = Math.floor(Math.random() * portada.length);
         const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -205,7 +193,15 @@ const Detalle = () =>{
                                                 <h3 className="post-title">{item.serv_nombre}</h3>
                                             </div>
                                             <div className="sx-post-text">
+                                                <hr />
+                                                <h5>DESCRIPCION</h5>
+                                                <hr />
                                                 <div dangerouslySetInnerHTML={{ __html: item.serv_descripcion }}></div>                                                                                                
+                                                <hr />
+                                                <h5>DATOS DEL SERVICIO</h5>
+                                                <hr />
+                                                <p>celular : <span>{item.serv_nro_celular}</span></p>
+                                                <p>inicio del servicio : <span>{formatearFecha(item.serv_registro)}</span></p>
                                             </div>                                            
                                         </div>                                                                             
                                     </div>
@@ -246,7 +242,7 @@ const Detalle = () =>{
                 portada
             } = institucion
     
-            const item = ofertas.find((e) => e.ofertas_id === parseInt(id,10))       
+            const item = ofertas.find((e) => e.ofertas_id === parseInt(decryptId(id),10))       
             
             const indiceAleatorio = Math.floor(Math.random() * portada.length);
             const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -282,7 +278,17 @@ const Detalle = () =>{
                                                 <h3 className="post-title">{item.ofertas_titulo}</h3>
                                             </div>
                                             <div className="sx-post-text">
-                                                <div dangerouslySetInnerHTML={{ __html: item.ofertas_descripcion }}></div>                                                
+                                                <hr />
+                                                <h5>DESCRIPCION</h5>
+                                                <hr />
+                                                <div dangerouslySetInnerHTML={{ __html: item.ofertas_descripcion }}></div>                                                                                                
+                                                <hr />
+                                                <h5>DATOS DEL SERVICIO</h5>
+                                                <hr />
+                                                <p>Inicio de la Oferta : <span>{formatearFecha(item.ofertas_inscripciones_ini)}</span></p>
+                                                <p>Fin de la Oferta : <span>{formatearFecha(item.ofertas_inscripciones_fin)}</span></p>
+                                                <p>Fecha de Examen : <span>{formatearFecha(item.ofertas_fecha_examen)}</span> </p>
+                                                <p>Referencia de la Oferta : <span>{item.ofertas_referencia}</span></p>
                                             </div>                                                                                        
                                         </div>                                                                               
                                     </div>
@@ -327,7 +333,7 @@ const Detalle = () =>{
             portada
         } = institucion
 
-        const item = publicaciones.find((e) => e.publicaciones_id === parseInt(id,10))  
+        const item = publicaciones.find((e) => e.publicaciones_id === parseInt(decryptId(id),10))  
 
         const indiceAleatorio = Math.floor(Math.random() * portada.length);
         const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -361,8 +367,17 @@ const Detalle = () =>{
                                             <div className="sx-post-title ">
                                                 <h3 className="post-title">{item.publicaciones_titulo}</h3>
                                             </div>
-                                            <div className="sx-post-text">
-                                                <div dangerouslySetInnerHTML={{ __html: item.publicaciones_descripcion }}></div>                                                                                                                                                
+                                            <div className="sx-post-text">                                                
+                                                <hr />
+                                                <h5>DESCRIPCION</h5>
+                                                <hr />                    
+                                                <div dangerouslySetInnerHTML={{ __html: item.publicaciones_descripcion }}></div>                                                                                                                                                                            
+                                                <hr />
+                                                <h5>DATOS DE LA PUBLICACIÓN</h5>
+                                                <hr />
+                                                <p>Fecha de Publicacion : <span>{item.publicaciones_fecha}</span></p>
+                                                <p>Autor : <span>{item.publicaciones_autor}</span></p>
+                                                <p>Documento : <span>{item.publicaciones_documento}</span></p>
                                             </div>                                                                                        
                                         </div>                                                                               
                                     </div>
@@ -404,7 +419,7 @@ const Detalle = () =>{
             portada
         } = institucion
 
-        const item = gacetas.find((e) => e.gaceta_id === parseInt(id,10)) 
+        const item = gacetas.find((e) => e.gaceta_id === parseInt(decryptId(id),10)) 
 
         const indiceAleatorio = Math.floor(Math.random() * portada.length);
         const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -438,7 +453,11 @@ const Detalle = () =>{
                                                 </ul>
                                             </div>
                                             <div className="sx-post-title ">
-                                                <h3 className="post-title">{item.gaceta_titulo}</h3>
+                                                <h3 className="post-title">{item.gaceta_titulo}</h3>                                                
+                                                <hr />
+                                                <h5>DATOS DE LA PUBLICACIÓN</h5>
+                                                <hr />
+                                                <p>Fecha de Publicacion de la gaceta : <span>{formatearFecha(item.gaceta_fecha)}</span></p>
                                             </div>                                            
                                         </div>                                                                            
                                     </div>
@@ -480,7 +499,7 @@ const Detalle = () =>{
             portada
         } = institucion
 
-        const item = eventos.find((e) => e.evento_id === parseInt(id,10)) 
+        const item = eventos.find((e) => e.evento_id === parseInt(decryptId(id),10)) 
 
         const indiceAleatorio = Math.floor(Math.random() * portada.length);
         const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -514,8 +533,17 @@ const Detalle = () =>{
                                             <div className="sx-post-title ">
                                                 <h3 className="post-title">{item.evento_titulo}</h3>
                                             </div>
-                                            <div className="sx-post-text">
-                                                <div dangerouslySetInnerHTML={{ __html: item.evento_descripcion }}></div>                                                
+                                            <div className="sx-post-text">                                                
+                                                <hr />
+                                                <h5>DESCRIPCION</h5>
+                                                <hr />                    
+                                                <div dangerouslySetInnerHTML={{ __html: item.publicaciones_descripcion }}></div>                                                                                                                                                                            <div dangerouslySetInnerHTML={{ __html: item.evento_descripcion }}></div>                                                
+                                                <hr />
+                                                <h5>DATOS DEL EVENTO</h5>
+                                                <hr />
+                                                <p>Fecha del Evento : <span>{formatearFecha(item.evento_fecha)}</span></p>
+                                                <p>Hora del Evento : <span>{convertirHora(item.evento_hora)}</span></p>
+                                                <p>Lugar del Evento : <span>{item.evento_lugar}</span></p>
                                             </div>                                            
                                         </div>                                                                               
                                     </div>
@@ -557,7 +585,7 @@ const Detalle = () =>{
             portada
         } = institucion
 
-        const item = videos.find((e) => e.video_id === parseInt(id,10)) 
+        const item = videos.find((e) => e.video_id === parseInt(decryptId(id),10)) 
 
         const indiceAleatorio = Math.floor(Math.random() * portada.length);
         const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -597,8 +625,11 @@ const Detalle = () =>{
                                             <div className="sx-post-title ">
                                                 <h3 className="post-title">{item.video_titulo}</h3>
                                             </div>
-                                            <div className="sx-post-text">
-                                                <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>                                                                                                
+                                            <div className="sx-post-text">                                                
+                                                <hr />
+                                                <h5>DESCRIPCION</h5>
+                                                <hr />                    
+                                                <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>                                                                                                                                                <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>                                                                                                                                                
                                             </div>                                            
                                         </div>                                                                               
                                     </div>
@@ -642,9 +673,9 @@ const Detalle = () =>{
         const {
             institucion_nombre,
             portada
-        } = institucion                        
+        } = institucion                                        
 
-        const item = convocatorias.find((e) => e.idconvocatorias === parseInt(id,10)) 
+        const item = convocatorias.find((e) => e.idconvocatorias === parseInt(decryptId(id),10)) 
         
         const indiceAleatorio = Math.floor(Math.random() * portada.length);
         const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -679,7 +710,15 @@ const Detalle = () =>{
                                                 <h3 className="post-title">{item.con_titulo}</h3>
                                             </div>
                                             <div className="sx-post-text">
-                                                {/* <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>                                                                                                 */}
+                                                <hr />
+                                                <h5>DESCRIPCION</h5>
+                                                <hr />                    
+                                                <div dangerouslySetInnerHTML={{ __html: item.con_descripcion }}></div>                                                                                                                                                                            
+                                                <hr />
+                                                <h5>DATOS E INFORMACIÓN</h5>
+                                                <hr />
+                                                <p>Fecha de inicio : <span>{formatearFecha(item.con_fecha_inicio)}</span></p>
+                                                <p>Fecha de Fin : <span>{formatearFecha(item.con_fecha_fin)}</span></p>
                                             </div>                                            
                                         </div>: null}                                                                             
                                     </div>
@@ -724,7 +763,7 @@ const Detalle = () =>{
             portada
         } = institucion
 
-        const item = cursos.find((e) => e.iddetalle_cursos_academicos === parseInt(id,10))
+        const item = cursos.find((e) => e.iddetalle_cursos_academicos === parseInt(decryptId(id),10))
 
         const indiceAleatorio = Math.floor(Math.random() * portada.length);
         const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -759,7 +798,25 @@ const Detalle = () =>{
                                                 <h3 className="post-title">{item.det_titulo}</h3>
                                             </div>
                                             <div className="sx-post-text">
-                                                {/* <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>*/}
+                                            <hr />
+                                                <h5>DESCRIPCION</h5>
+                                                <hr />                    
+                                                <div dangerouslySetInnerHTML={{ __html: item.det_descripcion }}></div>                                                                                                                                                                            
+                                                <hr />
+                                                <h5>DATOS E INFORMACIÓN</h5>
+                                                <hr />
+                                                <p>Costo para estudiantes : <span>{item.det_costo}</span></p>
+                                                <p>Costo para Extranjeros : <span>{item.det_costo_ext}</span></p>
+                                                <p>Costo para Profesionales : <span>{item.det_costo_profe}</span></p>
+                                                <p>Cupos disponibles : <span>{item.det_cupo_max}</span></p>
+                                                <p>Carga Horaria : <span>{item.det_carga_horaria}</span></p>
+                                                <p>Lugar de Capacitacion : <span>{item.det_lugar_curso}</span></p>
+                                                <p>Modalidad : <span>{item.det_modalidad}</span></p>
+                                                <p>Fecha de Inicio : <span>{formatearFecha(item.det_fecha_ini)}</span></p>
+                                                <p>Fecha de Fin : <span>{formatearFecha(item.det_fecha_fin)}</span></p>
+                                                <p>Hora de Inicio : <span>{convertirHora(item.det_hora_ini)}</span></p>
+                                                <p>Enlace de WhatsApp : <span><a style={{color: 'var(--color-primario)'}} target='_blank' rel="noopener noreferrer" href={item.det_grupo_whatssap}>Link de Curso...</a></span></p>
+                                                <p>Version del Curso : <span>{item.det_version}</span></p>
                                             </div>                                            
                                         </div>                                                                               
                                     </div>

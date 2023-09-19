@@ -8,6 +8,8 @@ import { useQuery } from '@tanstack/react-query';
 import { TIPOS } from '../../types/types';
 import bgimg1 from "../../images/background/bg-4.png"
 import bgimg2 from "../../images/background/cross-line2.png"
+import sinRegistros from '../Common/SinRegistros';
+import { AES } from 'crypto-js';
 
 const Convocatorias4 = ({tipo}) => {    
 
@@ -56,7 +58,10 @@ const Convocatorias4 = ({tipo}) => {
             }
         };
 
-        const sinRegistros = (<div style={{textAlign: 'center', fontSize:'3em', padding: '20px', background: 'var(--color-primario)',color: '#fff'}}>Sin Registros</div>)
+        const encryptId = (data) => {
+            const encryptedData = AES.encrypt(JSON.stringify(data), import.meta.env.VITE_APP_ENCRYPT).toString();
+            return encodeURIComponent(encryptedData); // Codifica el resultado antes de usarlo en una URL
+        };
 
         if(!loading_institucion && !loading_static_data && !loading_images && !loading_convocatorias && tipo===TIPOS.CONVOCATORIAS){
             const {
@@ -119,7 +124,7 @@ const Convocatorias4 = ({tipo}) => {
                                         <div className="about-home-right">
                                             <OwlCarousel className="owl-carousel about-home number-slider owl-btn-vertical-center" {...options}>
                                                 {ConvocatoriasAndComunicadosAndAvisos.map((item, index) => (
-                                                    <NavLink key={index} to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}>
+                                                    <NavLink key={index} to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}>
                                                         <div className="item" key={index}>
                                                             <div className="sx-img-effect zoom-slow">
                                                                 <img style={{objectFit: 'cover', width:'100%',height:'450px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Convocatorias/${item.con_foto_portada}`} alt="" />                                                        
@@ -201,7 +206,7 @@ const Convocatorias4 = ({tipo}) => {
                                         <div className="about-home-right">
                                             <OwlCarousel className="owl-carousel about-home number-slider owl-btn-vertical-center" {...options}>
                                                 {CursosAndSeminarios.map((item, index) => (
-                                                    <NavLink key={index} to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}>
+                                                    <NavLink key={index} to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}>
                                                         <div className="item" key={index}>
                                                             <div className="sx-img-effect zoom-slow">
                                                                 <img style={{objectFit: 'cover', width:'100%',height:'450px'}} src={`${import.meta.env.VITE_APP_ROOT_API}/Cursos/${item.det_img_portada}`} alt="" />                                                        

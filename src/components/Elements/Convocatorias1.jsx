@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TIPOS } from "../../types/types";
 import bgimg1 from "../../images/background/cross-line2.png";
 import SinRegistros from "../Common/SinRegistros"
+import { AES } from 'crypto-js';
 
 const Convocatorias1 = ({ tipo }) => {
 
@@ -67,6 +68,11 @@ const Convocatorias1 = ({ tipo }) => {
     return mesReducido;
   }    
 
+  const encryptId = (data) => {
+    const encryptedData = AES.encrypt(JSON.stringify(data), import.meta.env.VITE_APP_ENCRYPT).toString();
+    return encodeURIComponent(encryptedData); // Codifica el resultado antes de usarlo en una URL
+  };
+
   /* COMPONENTE PARA CONVOCATORIAS - COMUNICADOS - AVISOS */
   if (
     !loading_institucion &&
@@ -103,7 +109,7 @@ const Convocatorias1 = ({ tipo }) => {
       lastConvocatoria,
       lastComunicado,
       lastAviso,
-    ].filter((item) => item !== undefined);            
+    ].filter((item) => item !== undefined);                
 
     /* COMPONENTE PARA CONVOCATORIAS, COMUNICADOS Y AVISOS */
     return (
@@ -133,7 +139,7 @@ const Convocatorias1 = ({ tipo }) => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                            to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                           >
                             <img
                               src={`${
@@ -157,7 +163,7 @@ const Convocatorias1 = ({ tipo }) => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                                  to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                                 >
                                   <span>
                                     {
@@ -170,7 +176,7 @@ const Convocatorias1 = ({ tipo }) => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                                  to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                                 >
                                   {institucion_iniciales}
                                 </NavLink>{" "}
@@ -180,7 +186,7 @@ const Convocatorias1 = ({ tipo }) => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                                to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                               >
                                 {item.con_titulo}
                               </NavLink>
@@ -188,7 +194,7 @@ const Convocatorias1 = ({ tipo }) => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${item.idconvocatorias}`}
+                              to={`/detalle/${item.tipo_conv_comun.tipo_conv_comun_titulo}/${encryptId(item.idconvocatorias)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"
@@ -270,7 +276,7 @@ const Convocatorias1 = ({ tipo }) => {
                       <div className="blog-post blog-grid date-style-2">
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
-                            to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                            to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                           >
                             <img
                               src={`${
@@ -294,7 +300,7 @@ const Convocatorias1 = ({ tipo }) => {
                               </li>
                               <li className="post-author">
                                 <NavLink
-                                  to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                                  to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                                 >
                                   <span>
                                     {
@@ -307,7 +313,7 @@ const Convocatorias1 = ({ tipo }) => {
                               <li className="post-comment">
                                 {" "}
                                 <NavLink
-                                  to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                                  to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                                 >
                                   {institucion_iniciales}
                                 </NavLink>{" "}
@@ -317,7 +323,7 @@ const Convocatorias1 = ({ tipo }) => {
                           <div className="sx-post-title ">
                             <h4 className="post-title">
                               <NavLink
-                                to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                                to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                               >
                                 {item.det_titulo}
                               </NavLink>
@@ -325,7 +331,7 @@ const Convocatorias1 = ({ tipo }) => {
                           </div>
                           <div className="sx-post-readmore">
                             <NavLink
-                              to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${item.iddetalle_cursos_academicos}`}
+                              to={`/detalle/${item.tipo_curso_otro.tipo_conv_curso_nombre}/${encryptId(item.iddetalle_cursos_academicos)}`}
                               title="READ MORE"
                               rel="bookmark"
                               className="site-button-link"

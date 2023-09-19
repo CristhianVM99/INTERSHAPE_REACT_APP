@@ -7,6 +7,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import {
   getGacetas,
   getInstitucion,
+  getPublicaciones,
   getStaticDataInstitucion,
   getStaticImages,
 } from "../api/institucionAPI";
@@ -15,6 +16,7 @@ import { TIPOS } from "../types/types";
 import sinRegistros from "../components/Common/SinRegistros";
 import ConfigColorIcon from "../utils/ConfigColorIcon";
 import LoadScript from "../utils/LoadScripts";
+import { AES } from 'crypto-js';
 
 const Institucion = () => {
   const { cat } = useParams();
@@ -43,11 +45,18 @@ const Institucion = () => {
     queryFn: getGacetas,
   });
 
+  /* OBTENCION DE INFORMACION DEL STORE API PUBLICACIONES*/
+  const { isLoading: loading_publicaciones, data: publicaciones } = useQuery({
+    queryKey: ["publicaciones"],
+    queryFn: getPublicaciones,
+  });
+
   /* CATEGORIA PARA FILTRADOS */
   const filters = [
     { label: TIPOS.CONVENIOS, filter: "." + TIPOS.CONVENIOS },
     { label: TIPOS.PASANTIAS, filter: "." + TIPOS.PASANTIAS },
     { label: TIPOS.TRABAJOS, filter: "." + TIPOS.TRABAJOS },
+    { label: TIPOS.INSTITUTO, filter: "." + TIPOS.INSTITUTO_INVESTIGACION },
   ];
 
   useEffect(() => {
@@ -61,10 +70,44 @@ const Institucion = () => {
     }
   }, [loading_institucion, institucion]);
 
+  /* FUNCION PARA OBTENER EL DIA DE UNA FECHA */
+  function obtenerDiaDeFecha2(fechaString) {
+    const fecha = new Date(fechaString);
+    const dia = fecha.getDate();
+    return dia;
+  }
+
+  /* FUNCION PARA OBTENER EL MES DE UNA FECHA */
+  function obtenerMesDeFecha2(fechaString) {
+    const fecha = new Date(fechaString);
+    const meses = [
+      "ENE",
+      "FEB",
+      "MAR",
+      "ABR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AGO",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DIC",
+    ];
+    const mes = fecha.getMonth(); // Obtiene el mes (0-11)
+    return meses[mes];
+  }
+
+  const encryptId = (data) => {
+    const encryptedData = AES.encrypt(JSON.stringify(data), import.meta.env.VITE_APP_ENCRYPT).toString();
+    return encodeURIComponent(encryptedData); // Codifica el resultado antes de usarlo en una URL
+  };
+
   if (
     !loading_institucion &&
     !loading_static_data &&
     !loading_gacetas &&
+    !loading_publicaciones &&
     !loading_images
   ) {
     /* DATOS OBTENIDOS DESDE LA STORE API */
@@ -107,11 +150,26 @@ const Institucion = () => {
         ...item, // Copiar el objeto existente
         filter: TIPOS.TRABAJOS,
       };
-    });
+    });    
+
+    /* FILTRADOE DE CONVENIOS PARA GACETAS DE TIPO TRABAJO DIRIGIDO */
+    const filterinstitucion = gacetas.filter((e) =>
+      e.gaceta_titulo.includes(TIPOS.TRABAJO_DIRIGIDO)
+    );
+    const instituto_investigacion = filterinstitucion.map((item) => {
+      // Copiar el objeto existente y agregar el nuevo campo
+      return {
+        ...item, // Copiar el objeto existente
+        filter: TIPOS.INSTITUTO_INVESTIGACION,
+      };
+    });    
 
     /* CONCATENACION DE CONVENIOS - PASANTIAS - TRABAJOS DIRIGIDOS */
-    const items = convenios.concat(pasantias, trabajos);
+    const items = convenios.concat(pasantias, trabajos,instituto_investigacion);    
 
+    const pub_instituto_investigacion = publicaciones.filter((e) => 
+      e.publicaciones_tipo === "INSTITUTO DE INVESTIGACIÓN",
+    )
     /* IMAGEN ALEATORIA */
     const indiceAleatorio = Math.floor(Math.random() * portada.length);
     const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
@@ -123,8 +181,8 @@ const Institucion = () => {
       <>
         <Header4 />
         <Banner
-          title={cat}
-          pagename={cat}
+          title={cat === TIPOS.INSTITUTO_INVESTIGACION ? "INSTITUTO DE INVESTIGACIÓN" : cat}
+          pagename={cat === TIPOS.INSTITUTO_INVESTIGACION ? "INSTITUTO DE INVESTIGACIÓN" : cat}
           description={txt_content_banner_institucion}
           bgimage={img ?? images.BgThree}
         />
@@ -235,6 +293,90 @@ const Institucion = () => {
         ) : (
           sinRegistros
         )}
+
+          <div className="section-full p-tb80 bg-white inner-page-padding">
+            <div className="container">
+              {cat === TIPOS.INSTITUTO_INVESTIGACION ? (
+                <div className="masonry-outer mfp-gallery news-grid clearfix row ">
+                  {pub_instituto_investigacion.map((item, index) => (
+                    <div
+                      className="masonry-item  col-lg-4 col-md-6 col-sm-12"
+                      key={index}
+                    >
+                      <div className="blog-post blog-grid date-style-2">
+                        <div className="sx-post-media sx-img-effect img-reflection">
+                          <NavLink
+                            to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
+                          >
+                            <img
+                              src={`${
+                                import.meta.env.VITE_APP_ROOT_API
+                              }/Publicaciones/${item.publicaciones_imagen}`}
+                              alt=""
+                              style={{ height: "400px" }}
+                            />
+                          </NavLink>
+                        </div>
+                        <div className="sx-post-info p-t30">
+                          <div className="sx-post-meta ">
+                            <ul>
+                              <li className="post-date">
+                                <strong>
+                                  {obtenerDiaDeFecha2(item.publicaciones_fecha)}
+                                </strong>{" "}
+                                <span>
+                                  {obtenerMesDeFecha2(item.publicaciones_fecha)}
+                                </span>{" "}
+                              </li>
+                              <li className="post-author">
+                                <NavLink
+                                  to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
+                                >
+                                  <span>{item.publicaciones_autor}</span>
+                                </NavLink>{" "}
+                              </li>
+                              <li className="post-comment">
+                                {" "}
+                                <NavLink
+                                  to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
+                                >
+                                  {TIPOS.PUBLICACIONES}
+                                </NavLink>{" "}
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="sx-post-title ">
+                            <h4 className="post-title">
+                              <NavLink
+                                to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
+                              >
+                                {item.publicaciones_titulo}
+                              </NavLink>
+                            </h4>
+                          </div>
+                          <div className="sx-post-readmore">
+                            <NavLink
+                              to={`/detalle/${TIPOS.PUBLICACIONES}/${encryptId(item.publicaciones_id)}`}
+                              title="READ MORE"
+                              rel="bookmark"
+                              className="site-button-link"
+                            >
+                              {`Ver Mas`}
+                            </NavLink>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : null}                          
+            
+              {TIPOS.PUBLICACIONES === cat && publicaciones.length === 0
+                ? sinRegistros
+                : null}              
+            </div>
+          </div>
+
         <Footer />
       </>
     );

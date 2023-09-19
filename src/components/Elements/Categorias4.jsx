@@ -57,7 +57,7 @@ const Services3 = () => {
       {
         count: "02",
         title: "Comunicados",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-tv",
         image: images.BgComunicados,
         description: "Comunicados de la Carrera",
         link: `/recursos/${TIPOS.COMUNICADOS}`,
@@ -65,7 +65,7 @@ const Services3 = () => {
       {
         count: "03",
         title: "Avisos",
-        flaticon: "flaticon-window",
+        flaticon: "flaticon-certificate",
         image: images.BgAvisos,
         description: "Avisos de la Carrera",
         link: `/recursos/${TIPOS.AVISOS}`,
@@ -81,7 +81,7 @@ const Services3 = () => {
       {
         count: "05",
         title: "Seminarios",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-project",
         image: images.BgSeminarios,
         description: "Seminarios de la Carrera",
         link: `/recursos/${TIPOS.SEMINARIOS}`,
@@ -89,7 +89,7 @@ const Services3 = () => {
       {
         count: "06",
         title: "Servicios",
-        flaticon: "flaticon-window",
+        flaticon: "flaticon-set-square",
         image: images.BgServicios,
         description: "Servicios de la Carrera",
         link: `/recursos/${TIPOS.SERVICIOS}`,
@@ -105,7 +105,7 @@ const Services3 = () => {
       {
         count: "08",
         title: "Publicaciones",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-bookcase",
         image: images.BgPublicaciones,
         description: "Publicaciones de la Carrera",
         link: `/recursos/${TIPOS.PUBLICACIONES}`,
@@ -113,7 +113,7 @@ const Services3 = () => {
       {
         count: "09",
         title: "Gacetas",
-        flaticon: "flaticon-window",
+        flaticon: "flaticon-3d",
         image: images.BgGacetas,
         description: "Gacetas de la Carrera",
         link: `/recursos/${TIPOS.GACETAS}`,
@@ -129,7 +129,7 @@ const Services3 = () => {
       {
         count: "11",
         title: "Videos",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-table-1",
         image: images.BgVideos,
         description: "Videos de la Carrera",
         link: `/recursos/${TIPOS.VIDEOS}`,

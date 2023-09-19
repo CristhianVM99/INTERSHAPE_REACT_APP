@@ -13,6 +13,7 @@ export const TIPOS = {
     CONVENIOS: 'CONVENIOS',
     PASANTIAS: 'PASANTIAS',
     TRABAJOS: 'TRABAJOS',
+    INSTITUTO: 'INSTITUTO',
     CONVENIO: 'CONVENIO',
     PASANTIA: 'PASANTIA',
     TRABAJO_DIRIGIDO: 'TRABAJO DIRIGIDO',    
@@ -22,6 +23,7 @@ export const TIPOS = {
     GACETAS: 'GACETAS',
     EVENTOS: 'EVENTOS',
     VIDEOS: 'VIDEOS',
+    INSTITUTO_INVESTIGACION: 'INSTITUTO_DE_INVESTIGACION',
   };
 /* =============================================================================
 /

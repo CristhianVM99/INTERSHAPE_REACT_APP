@@ -14,7 +14,8 @@ const Navigation = () => {
 
     /* TIPADO PARA LA FILTRACION PARA LOS LINKS QUE PERTENCEN AL NAV CON EL NOMBRE DE KARDEX */
     const TIPO_LINK = {
-        KARDEX: 'KARDEX'
+        KARDEX: 'KARDEX',
+        BIBLIOTECA: 'BIBLIOTECA'
     }
 
     useEffect(() => {
@@ -43,6 +44,7 @@ const Navigation = () => {
 
     /* FILTRADO DE LINKS QUE TENGAN EL TIPO 'KARDEX' */
     const links_filter = links.filter((e) => e.ei_tipo === TIPO_LINK.KARDEX)
+    const links_biblioteca = links.filter((e) => e.ei_tipo === TIPO_LINK.BIBLIOTECA)
 
         /* COMPONENTE */
         return (
@@ -74,6 +76,7 @@ const Navigation = () => {
                             <li><NavLink to={`/institucion/${TIPOS.CONVENIOS}`}>Convenios Institucionales</NavLink></li>
                             <li><NavLink to={`/institucion/${TIPOS.PASANTIAS}`}>Pasantías</NavLink></li>
                             <li><NavLink to={`/institucion/${TIPOS.TRABAJOS}`}>Trabajos Dirigidos</NavLink></li>
+                            <li><NavLink to={`/institucion/${TIPOS.INSTITUTO_INVESTIGACION}`}>Instituto de Investigacion</NavLink></li>
                         </ul>
                     </li>
                     <li>
@@ -112,15 +115,19 @@ const Navigation = () => {
                             </ul>                        
                     </li>
                     ) : null}
-                    <li>
+                    {links_biblioteca.length > 0 ? (
+                        <li>
                         {/* LINKS DE RECURSOS DE LA UNIVERSIDAD */}
                         <NavLink to={""}>Biblioteca</NavLink>
                         <ul className="sub-menu">
-                            <li><a href={"http://mibiblioteca.upea.bo/"} target='_blank' rel="noopener noreferrer">Biblioteca Virtual</a></li>
-                            <li><a href={"https://biblioteca.upea.bo/"} target='_blank' rel="noopener noreferrer">Biblioteca Upea</a></li>
-                            <li><a href={"http://repositorio.upea.bo/"} target='_blank' rel="noopener noreferrer">Repositorio</a></li>
+                            {links_biblioteca.map((item, index) => (
+                                <li key={index}>
+                                    <a href={item.ei_link} target='_blank' rel="noopener noreferrer">{item.ei_nombre}</a>
+                                </li>
+                            ))}
                         </ul>
-                    </li>
+                        </li>
+                    ): null}
                 </ul>
             </>
         );

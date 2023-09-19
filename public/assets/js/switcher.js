@@ -36,7 +36,7 @@
 jQuery( document ).ready(function() {
 	
     // Color changer
-    jQuery(".skin-1").on('click', function(){
+    jQuery(".skin-1").on('click', function(){		
         jQuery(".skin").attr("href", "css/skin/skin-1.css");
         return false;
     });

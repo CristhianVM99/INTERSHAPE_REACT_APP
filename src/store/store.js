@@ -18,7 +18,6 @@ export const dataIndex = {
     //SOBRE LA INSTITUCION
     txt_content_sobre_la_institucion: 'Sobre la Institucion',
     txt_content_texto: 'Cada día en la universidad es una oportunidad para aprender algo nuevo y marcar la diferencia.',
-    txt_content_btn: 'Ver Mas',
 }
 export const dataCategory = {
     txt_content_btn: 'Ver Mas',

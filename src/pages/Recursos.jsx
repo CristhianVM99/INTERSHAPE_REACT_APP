@@ -21,6 +21,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { TIPOS } from "../types/types";
 import ConfigColorIcon from "../utils/ConfigColorIcon";
 import { AES } from 'crypto-js';
+import ReactPlayer from 'react-player/youtube'
 
 const Recursos = () => {
   /* OBTENEMOS EL TIPO DE CATEGORIA */
@@ -621,15 +622,13 @@ const Recursos = () => {
                         <div className="sx-post-media sx-img-effect img-reflection">
                           <NavLink
                             to={`/detalle/${TIPOS.VIDEOS}/${encryptId(item.video_id)}`}
-                          >
-                            <iframe
-                              width="560" // Ancho deseado
-                              height="400" // Alto deseado
-                              src={item.video_enlace} // URL de embed del video
-                              title="Video Embed"
-                              frameBorder="0"
-                              allowFullScreen
-                            ></iframe>
+                          >                            
+                            <ReactPlayer 
+                              url={item.video_enlace} 
+                              className='react-player'
+                              width='100%'
+                              height='400px'
+                            />
                           </NavLink>
                         </div>
                         <div className="sx-post-info p-t30">

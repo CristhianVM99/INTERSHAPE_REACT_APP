@@ -12,6 +12,7 @@ import LoadScript from '../utils/LoadScripts';
 import ConfigColorIcon from '../utils/ConfigColorIcon';
 import { AES } from 'crypto-js';
 import { enc } from 'crypto-js'; 
+import ReactPlayer from 'react-player/youtube'
 
 const Detalle = () =>{   
 
@@ -605,15 +606,14 @@ const Detalle = () =>{
                                         {/* BLOG START */}
                                         <div className="blog-post blog-detail text-black">
                                             <div className="sx-post-media">
-                                                <div className="portfolio-item">
-                                                <iframe
-                                                    width="100%" // Ancho deseado
-                                                    height="" // Alto deseado
-                                                    src={item.video_enlace} // URL de embed del video
-                                                    title="Video Embed"
-                                                    frameBorder="0"
-                                                    allowFullScreen
-                                                ></iframe>
+                                                <div className="portfolio-item">                                                
+                                                <ReactPlayer 
+                                                    url={item.video_enlace} 
+                                                    className='react-player'
+                                                    playing
+                                                    width='100%'
+                                                    height='400px'
+                                                />
                                                 </div>
                                             </div>
                                             <div className="sx-post-meta  m-t20">
@@ -629,7 +629,7 @@ const Detalle = () =>{
                                                 <hr />
                                                 <h5>DESCRIPCION</h5>
                                                 <hr />                    
-                                                <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>                                                                                                                                                <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>                                                                                                                                                
+                                                <div dangerouslySetInnerHTML={{ __html: item.video_breve_descripcion }}></div>                                                                                                                                                                                                                                                                                                
                                             </div>                                            
                                         </div>                                                                               
                                     </div>

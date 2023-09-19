@@ -82,9 +82,9 @@ const PlanDeEstudios1 = () => {
                             className="pdf"
                             file={`${
                               import.meta.env.VITE_APP_ROOT_API
-                            }/InstitucionUpea/${institucion_organigrama}`}
+                            }/InstitucionUpea/${institucion_organigrama}`}                            
                           >
-                            <Page pageNumber={1} height={600} />
+                            <Page pageNumber={1} height={400}/>
                           </Document>
                         ) : (
                           <img
@@ -92,7 +92,7 @@ const PlanDeEstudios1 = () => {
                               import.meta.env.VITE_APP_ROOT_API
                             }/InstitucionUpea/${institucion_organigrama}`}
                             alt=""
-                            style={{ height: "400px" }}
+                            style={{height:'100%'}}
                           />
                         )}
                       </div>

@@ -22,7 +22,7 @@ const Services7 = () => {
       {
         count: "02",
         title: "Comunicados",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-ruler-1",
         image: images.BgComunicados,
         description: "Comunicados de la Carrera",
         link: `/recursos/${TIPOS.COMUNICADOS}`,
@@ -30,7 +30,7 @@ const Services7 = () => {
       {
         count: "03",
         title: "Avisos",
-        flaticon: "flaticon-window",
+        flaticon: "flaticon-set-square",
         image: images.BgAvisos,
         description: "Avisos de la Carrera",
         link: `/recursos/${TIPOS.AVISOS}`,
@@ -38,7 +38,7 @@ const Services7 = () => {
       {
         count: "04",
         title: "Cursos",
-        flaticon: "flaticon-sketch",
+        flaticon: "flaticon-project",
         image: images.BgCursos,
         description: "Cursos de la Carrera",
         link: `/recursos/${TIPOS.CURSOS}`,
@@ -46,7 +46,7 @@ const Services7 = () => {
       {
         count: "05",
         title: "Seminarios",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-sketch-1",
         image: images.BgSeminarios,
         description: "Seminarios de la Carrera",
         link: `/recursos/${TIPOS.SEMINARIOS}`,
@@ -54,7 +54,7 @@ const Services7 = () => {
       {
         count: "06",
         title: "Servicios",
-        flaticon: "flaticon-window",
+        flaticon: "flaticon-real-estate",
         image: images.BgServicios,
         description: "Servicios de la Carrera",
         link: `/recursos/${TIPOS.SERVICIOS}`,
@@ -70,7 +70,7 @@ const Services7 = () => {
       {
         count: "08",
         title: "Publicaciones",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-bookcase",
         image: images.BgPublicaciones,
         description: "Publicaciones de la Carrera",
         link: `/recursos/${TIPOS.PUBLICACIONES}`,
@@ -78,7 +78,7 @@ const Services7 = () => {
       {
         count: "09",
         title: "Gacetas",
-        flaticon: "flaticon-window",
+        flaticon: "flaticon-3d",
         image: images.BgGacetas,
         description: "Gacetas de la Carrera",
         link: `/recursos/${TIPOS.GACETAS}`,
@@ -86,7 +86,7 @@ const Services7 = () => {
       {
         count: "10",
         title: "Eventos",
-        flaticon: "flaticon-sketch",
+        flaticon: "flaticon-certificate",
         image: images.BgEventos,
         description: "Eventos de la Carrera",
         link: `/recursos/${TIPOS.EVENTOS}`,
@@ -94,7 +94,7 @@ const Services7 = () => {
       {
         count: "11",
         title: "Videos",
-        flaticon: "flaticon-stairs",
+        flaticon: "flaticon-tv",
         image: images.BgVideos,
         description: "Videos de la Carrera",
         link: `/recursos/${TIPOS.VIDEOS}`,

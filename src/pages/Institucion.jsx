@@ -168,7 +168,7 @@ const Institucion = () => {
     const items = convenios.concat(pasantias, trabajos,instituto_investigacion);    
 
     const pub_instituto_investigacion = publicaciones.filter((e) => 
-      e.publicaciones_tipo === "INSTITUTO DE INVESTIGACIÓN",
+      e.publicaciones_tipo === "INSTITUTO DE INVESTIGACION",
     )
     /* IMAGEN ALEATORIA */
     const indiceAleatorio = Math.floor(Math.random() * portada.length);

@@ -13,6 +13,7 @@ import ConfigColorIcon from '../utils/ConfigColorIcon';
 import { AES } from 'crypto-js';
 import { enc } from 'crypto-js'; 
 import ReactPlayer from 'react-player/youtube'
+import RandomImage from '../utils/RandomImage';
 
 const Detalle = () =>{   
 
@@ -87,36 +88,20 @@ const Detalle = () =>{
 
     /* FORMATEAR FECHA */
     function formatearFecha(fechaString) {
-        const fecha = new Date(fechaString);
-      
-        const meses = [
-          "enero", "febrero", "marzo", "abril", "mayo", "junio",
-          "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
-        ];
-      
+        const fecha = new Date(fechaString);      
+        const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio","julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];      
         const día = fecha.getDate();
         const mes = meses[fecha.getMonth()];
-        const año = fecha.getFullYear();
-      
+        const año = fecha.getFullYear();      
         return `${día} de ${mes} de ${año}`;
     }
 
     function convertirHora(hora24) {
-        // Divide la hora en horas, minutos y segundos
-        const [hora, minutos] = hora24.split(':');
-        
-        // Convierte la hora en un número entero
-        const horaNum = parseInt(hora, 10);
-      
-        // Determina si es AM o PM
-        const periodo = horaNum >= 12 ? 'PM' : 'AM';
-      
-        // Calcula la hora en el formato de 12 horas
+        const [hora, minutos] = hora24.split(':');        
+        const horaNum = parseInt(hora, 10);      
+        const periodo = horaNum >= 12 ? 'PM' : 'AM';    
         const hora12 = horaNum > 12 ? horaNum - 12 : horaNum === 0 ? 12 : horaNum;
-      
-        // Formatea la hora con minutos y AM/PM
         const horaFormateada = `${hora12}:${minutos} ${periodo}`;
-      
         return horaFormateada;
     }      
 
@@ -127,15 +112,10 @@ const Detalle = () =>{
     };          
 
     useEffect(() => {
-
-        pdfjs.GlobalWorkerOptions.workerSrc =`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-        
+        pdfjs.GlobalWorkerOptions.workerSrc =`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;        
         LoadScript('/assets/js/custom.js');
-
         // Establecer colores si los datos están disponibles
-        if (!loading_institucion) {
-            ConfigColorIcon(institucion)
-          }
+        if (!loading_institucion) {ConfigColorIcon(institucion)}
       }, [loading_institucion, institucion]);      
 
     /* COMPONENTE PARA SERVICIOS */      
@@ -160,10 +140,8 @@ const Detalle = () =>{
         } = institucion
 
         const item = servicios.find((e) => e.serv_id === parseInt(decryptId(id),10)) 
-        
-        const indiceAleatorio = Math.floor(Math.random() * portada.length);
-        const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-        const img = `${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/Portada/${imagenSeleccionada}`;
+                
+        const img = RandomImage(portada)
 
         return (
             <>
@@ -244,10 +222,8 @@ const Detalle = () =>{
             } = institucion
     
             const item = ofertas.find((e) => e.ofertas_id === parseInt(decryptId(id),10))       
-            
-            const indiceAleatorio = Math.floor(Math.random() * portada.length);
-            const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-            const img = `${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/Portada/${imagenSeleccionada}`;
+
+            const img = RandomImage(portada)
 
         return (
             <>
@@ -421,10 +397,8 @@ const Detalle = () =>{
         } = institucion
 
         const item = gacetas.find((e) => e.gaceta_id === parseInt(decryptId(id),10)) 
-
-        const indiceAleatorio = Math.floor(Math.random() * portada.length);
-        const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-        const img = `${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/Portada/${imagenSeleccionada}`;
+        
+        const img = RandomImage(portada)
 
         return (
             <>
@@ -501,10 +475,8 @@ const Detalle = () =>{
         } = institucion
 
         const item = eventos.find((e) => e.evento_id === parseInt(decryptId(id),10)) 
-
-        const indiceAleatorio = Math.floor(Math.random() * portada.length);
-        const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-        const img = `${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/Portada/${imagenSeleccionada}`;
+        
+        const img = RandomImage(portada)
 
         return (
             <>
@@ -587,10 +559,8 @@ const Detalle = () =>{
         } = institucion
 
         const item = videos.find((e) => e.video_id === parseInt(decryptId(id),10)) 
-
-        const indiceAleatorio = Math.floor(Math.random() * portada.length);
-        const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-        const img = `${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/Portada/${imagenSeleccionada}`;
+        
+        const img = RandomImage(portada)
 
         return (
             <>
@@ -676,10 +646,8 @@ const Detalle = () =>{
         } = institucion                                        
 
         const item = convocatorias.find((e) => e.idconvocatorias === parseInt(decryptId(id),10)) 
-        
-        const indiceAleatorio = Math.floor(Math.random() * portada.length);
-        const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-        const img = `${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/Portada/${imagenSeleccionada}`;
+                
+        const img = RandomImage(portada)
 
         return (
             <>
@@ -764,10 +732,8 @@ const Detalle = () =>{
         } = institucion
 
         const item = cursos.find((e) => e.iddetalle_cursos_academicos === parseInt(decryptId(id),10))
-
-        const indiceAleatorio = Math.floor(Math.random() * portada.length);
-        const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-        const img = `${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/Portada/${imagenSeleccionada}`;
+    
+        const img = RandomImage(portada)
 
         return (
             <>
@@ -831,12 +797,10 @@ const Detalle = () =>{
                     </div>
                     {/* SECTION CONTENT END */}
                 </div>
-
                 <Footer />
             </>
         );
       } 
-
       return null
 };
 

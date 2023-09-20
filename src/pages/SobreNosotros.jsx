@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Header4 from "../components/Common/Header4";
 import Footer from "../components/Common/Footer";
 import Banner from "../components/Elements/Banner";
-import About3 from "../components/Elements/About3";
 import Autoridades1 from "../components/Elements/Autoridades1";
 import LinksExternos1 from "../components/Elements/LinksExternos1";
 import {
@@ -13,6 +12,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import loadScript from "../utils/LoadScripts";
 import ConfigColorIcon from "../utils/ConfigColorIcon";
+import RandomImage from "../utils/RandomImage";
+import InformacionInstitucion from "../components/Elements/InformacionInstitucion";
 
 const SobreNosotros = () => {
   /* OBTENCION DE INFORMACION DEL STORE API */
@@ -46,15 +47,11 @@ const SobreNosotros = () => {
     /* DATOS DE LA INSTITUCION */
     const { portada } = institucion;
 
+    /* IMAGEN ALEATORIA */
+    const img = RandomImage(portada);
+
     /* DATOS ESTATICOS */
     const { txt_content_about, txt_content_banner_about } = staticData;
-
-    /* IMAGENES ALEATORIAS */
-    const indiceAleatorio = Math.floor(Math.random() * portada.length);
-    const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-    const img = `${
-      import.meta.env.VITE_APP_ROOT_API
-    }/InstitucionUpea/Portada/${imagenSeleccionada}`;
 
     return (
       <>
@@ -66,7 +63,7 @@ const SobreNosotros = () => {
             description={txt_content_banner_about}
             bgimage={img ?? images.BgThree}
           />
-          <About3 />
+          <InformacionInstitucion />
           <Autoridades1 />
           <LinksExternos1 />
         </div>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { getConvocatorias, getCursos, getEventos, getGacetas, getInstitucion, getLinksInstExtAll, getOfertasAcademicas, getPublicaciones, getServicios, getVideos } from '../../api/institucionAPI';
+import { getConvocatorias, getCursos, getEventos, getGacetas, getLinksInstExtAll, getOfertasAcademicas, getPublicaciones, getServicios, getVideos } from '../../api/institucionAPI';
 import { useQuery } from '@tanstack/react-query';
 import { TIPOS } from '../../types/types';
 import { AES } from 'crypto-js';
@@ -12,12 +12,6 @@ const BlogSidebar = ({tipo}) => {
 
     useEffect(()=>{
         pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-    })
-
-    /* OBTENCION DE INFORMACION DEL STORE API INSTITUCION*/
-    const { isLoading: loading_institucion, data: institucion } = useQuery({
-        queryKey: ['institucion'],
-        queryFn: getInstitucion,
     })
 
     /* OBTENCION DE INFORMACION DEL STORE LINKS  */
@@ -104,13 +98,8 @@ const BlogSidebar = ({tipo}) => {
         !loading_gacetas &&
         !loading_eventos &&
         !loading_videos &&
-        !loading_institucion &&
         !loading_links_externos
     ){
-        const { institucion_iniciales } = institucion
-
-        console.log("inst ini", institucion_iniciales);
-
         const convocatorias_cat = convocatorias.filter((e) => e.tipo_conv_comun.tipo_conv_comun_titulo === TIPOS.CONVOCATORIAS);
         const comunicados_cat = convocatorias.filter((e) => e.tipo_conv_comun.tipo_conv_comun_titulo === TIPOS.COMUNICADOS);
         const avisos_cat = convocatorias.filter((e) => e.tipo_conv_comun.tipo_conv_comun_titulo === TIPOS.AVISOS);
@@ -395,13 +384,13 @@ const BlogSidebar = ({tipo}) => {
                         </ul>
                     </div>                    
                     {/* OUR GALLERY  */}
-                    <div className="widget widget_gallery mfp-gallery">
+                    <div className="widget ">
                         <h4 className="widget-title  ">Links de la Carrera</h4>
-                        <ul className="p-a10 bg-white clearfix">
+                        <ul className="p-a10 bg-white clearfix" style={{listStyle: 'none'}}>
                             {links_filter.map((item, index) => (
                                <li key={index}>
-                                    <div className="sx-post-thum" style={{background: '#fff',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                        <a href={item.ei_link} className="mfp-link" target='_blank' rel="noopener noreferrer"><img style={{objectFit: 'cover'}} src={`${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/LinksExternos/${item.ei_imagen}`} alt=""/></a>
+                                    <div className="" style={{background: '#fff',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                        <a href={item.ei_link} className="mfp-link" target='_blank' rel="noopener noreferrer"><img style={{objectFit: 'cover',height:'50px',width:'100%'}} src={`${import.meta.env.VITE_APP_ROOT_API}/InstitucionUpea/LinksExternos/${item.ei_imagen}`} alt="" /></a>
                                     </div>
                                 </li>         
                             ))}                                                        

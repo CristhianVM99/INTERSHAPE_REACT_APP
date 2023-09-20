@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import crossLine2 from "../images/background/cross-line2.png";
 import bgMap from "../images/background/bg-map.png";
 import ConfigColorIcon from "../utils/ConfigColorIcon";
+import RandomImage from "../utils/RandomImage";
 
 const Contacto = () => {
   /* OBTENCION DE INFORMACION DEL STORE IMAGES */
@@ -34,11 +35,12 @@ const Contacto = () => {
   useEffect(() => {
     // Establecer colores si los datos están disponibles
     if (!loading_institucion) {
-      ConfigColorIcon(institucion)
+      ConfigColorIcon(institucion);
     }
   }, [loading_institucion, institucion]);
 
   if (!loading_institucion && !loading_static_data && !loading_images) {
+    /* DATOS DE LA INSTITUCION */
     const {
       institucion_celular1,
       institucion_celular2,
@@ -48,23 +50,14 @@ const Contacto = () => {
       institucion_correo2,
       institucion_direccion,
       institucion_api_google_map,
-      institucion_iniciales,
+      institucion_nombre,
       portada,
     } = institucion;
 
     const { txt_content_contact, txt_content_banner_contact } = staticData;
 
-    const indiceAleatorio = Math.floor(Math.random() * portada.length);
-    const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-    const img = `${
-      import.meta.env.VITE_APP_ROOT_API
-    }/InstitucionUpea/Portada/${imagenSeleccionada}`;
-
-    const indiceAleatorio2 = Math.floor(Math.random() * portada.length);
-    const imagenSeleccionada2 = portada[indiceAleatorio2].portada_imagen;
-    const img2 = `${
-      import.meta.env.VITE_APP_ROOT_API
-    }/InstitucionUpea/Portada/${imagenSeleccionada2}`;
+    const img = RandomImage(portada);
+    const img2 = RandomImage(portada);
 
     return (
       <>
@@ -99,7 +92,7 @@ const Contacto = () => {
                               style={{ backgroundImage: crossLine2 }}
                             >
                               <h3 className="sep-line-one">
-                                {institucion_iniciales}
+                                {institucion_nombre}
                               </h3>
                             </div>
                           </div>
@@ -122,7 +115,7 @@ const Contacto = () => {
                               style={{ backgroundImage: crossLine2 }}
                             >
                               <h3 className="sep-line-one">
-                                Informacion de la Institucion.
+                                Información de la Institución.
                               </h3>
                             </div>
                           </div>
@@ -133,7 +126,7 @@ const Contacto = () => {
                             <i className="fa fa-phone" />
                           </div>
                           <div className="icon-content">
-                            <h5 className="m-t0">Celulares y Telefonos </h5>
+                            <h5 className="m-t0">Celulares y Teléfonos</h5>
                             <p>Cel : (+591) {institucion_celular1}</p>
                             <p>Cel : (+591) {institucion_celular2}</p>
                             <p>Tel : {institucion_telefono1}</p>
@@ -155,7 +148,7 @@ const Contacto = () => {
                             <i className="fa fa-map-marker" />
                           </div>
                           <div className="icon-content">
-                            <h5 className="m-t0">Direccion</h5>
+                            <h5 className="m-t0">Dirección</h5>
                             <p>{institucion_direccion}</p>
                           </div>
                         </div>

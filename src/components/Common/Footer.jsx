@@ -128,7 +128,6 @@ const Footer = () => {
                     </div>
                 </footer>
                 <Switcher/>
-    
             </>
         );
     }

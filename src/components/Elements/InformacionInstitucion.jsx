@@ -2,8 +2,9 @@ import { NavLink } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { getInstitucion, getStaticImages } from "../../api/institucionAPI";
 import { useQuery } from "@tanstack/react-query";
+import RandomImage from "../../utils/RandomImage";
 
-const About3 = () => {
+const InformacionInstitucion = () => {
   /* OBTENCION DE INFORMACION DEL STORE IMAGES */
   const { isLoading: loading_images, data: images } = useQuery({
     queryKey: ["getStaticImages"],
@@ -27,12 +28,8 @@ const About3 = () => {
       institucion_iniciales,
       portada,
     } = institucion;
-
-    const indiceAleatorio = Math.floor(Math.random() * portada.length);
-    const imagenSeleccionada = portada[indiceAleatorio].portada_imagen;
-    const img = `${
-      import.meta.env.VITE_APP_ROOT_API
-    }/InstitucionUpea/Portada/${imagenSeleccionada}`;
+    
+    const img = RandomImage(portada)
 
     return (
       <>
@@ -63,7 +60,7 @@ const About3 = () => {
                                   href="#collapseOne5"
                                   data-parent="#accordion5"
                                 >
-                                  Mision
+                                  Misión
                                   <span className="indicator">
                                     <i className="fa fa-plus" />
                                   </span>
@@ -92,7 +89,7 @@ const About3 = () => {
                                   className="collapsed"
                                   data-parent="#accordion5"
                                 >
-                                  Vision
+                                  Visión
                                   <span className="indicator">
                                     <i className="fa fa-plus" />
                                   </span>
@@ -149,7 +146,7 @@ const About3 = () => {
                       </li>
                       <li>
                         <NavLink to="/academia?tipo=horario">
-                          Horario Academico
+                          Calendario Académico
                         </NavLink>
                       </li>
                       <li>
@@ -159,7 +156,7 @@ const About3 = () => {
                       </li>
                       <li>
                         <NavLink to="/academia?tipo=reglamento">
-                          Reglamento y Mod. de graduacion
+                          Reglamento y Mod. De graduación
                         </NavLink>
                       </li>
                     </ul>
@@ -225,4 +222,11 @@ const About3 = () => {
   }
 };
 
-export default About3;
+/* =============================================================================
+/
+/    WEB DEVELOPER => CRISTHIAN VILLCA MAMANI
+/    LINKEDIN => https://www.linkedin.com/in/cristhian-villca-mamani-06933b251/
+/
+================================================================================ */
+
+export default InformacionInstitucion;

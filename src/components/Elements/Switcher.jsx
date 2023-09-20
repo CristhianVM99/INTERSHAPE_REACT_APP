@@ -1,71 +1,72 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
-const skins = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const Switcher = () => {
+  const [stylePath, setStylePath] = useState('/assets/css/skin/skin-1.css');
+  const [isSwitchActive, setIsSwitchActive] = useState(false);
 
-class Switcher extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.handleSwitchSkin.bind(this);
-        this.state = { stylePath: './assets/css/skin/skin-1.css' };
+  useEffect(() => {
+    const homepage2 = /\/home-2/i;
+    if (homepage2.test(window.location.href)) {
+      document.body.classList.add('footer-fixed');
+    } else {
+      document.body.classList.remove('footer-fixed');
     }
+  }, []);
 
-    componentDidMount = () => {
-        var homepage2 = /\/home-2/i;
+  const handleSwitchToggle = () => {
+    setIsSwitchActive(!isSwitchActive);
+  };
 
-        if (homepage2.test(window.location.href)) {
-            document.body.classList.add('footer-fixed');
-        } else {
-            document.body.classList.remove('footer-fixed');
-        } 
-        this.setState({ stylePath: './assets/css/skin/skin-1.css' });
-
+  const handleSwitchSkin = (skin) => {
+    switch (skin) {
+      case 1:
+        setStylePath('/assets/css/skin/skin-1.css');
+        break;
+      case 2:
+        setStylePath('/assets/css/skin/skin-2.css');
+        break;
+      case 3:
+        setStylePath('/assets/css/skin/skin-3.css');
+        break;
+      case 4:
+        setStylePath('/assets/css/skin/skin-4.css');
+        break;
+      case 5:
+        setStylePath('/assets/css/skin/skin-5.css');
+        break;
+      case 6:
+        setStylePath('/assets/css/skin/skin-6.css');
+        break;
+      case 7:
+        setStylePath('/assets/css/skin/skin-7.css');
+        break;
+      case 8:
+        setStylePath('./assets/css/skin/skin-8.css');
+        break;
+      case 9:
+        setStylePath('/assets/css/skin/skin-9.css');
+        break;
+      case 10:
+        setStylePath('/assets/css/skin/skin-10.css');
+        break;
+      default:
+        setStylePath('/assets/css/skin/skin-1.css');
+        break;
     }
+  };
 
-    state = { isSwitchActive: false };
-
-    handleSwitchToggle = () => {
-        this.setState({ isSwitchActive: !this.state.isSwitchActive });
-    };
-
-    handleSwitchSkin = (skinitem) => {
-
-        const skin = skinitem.item;
-
-        if (skin === 1) {
-            this.setState({ stylePath: './assets/css/skin/skin-1.css' });
-        } else if (skin === 2) {
-            this.setState({ stylePath: './assets/css/skin/skin-2.css' });
-        } else if (skin === 3) {
-            this.setState({ stylePath: './assets/css/skin/skin-3.css' });
-        } else if (skin === 4) {
-            this.setState({ stylePath: './assets/css/skin/skin-4.css' });
-        } else if (skin === 5) {
-            this.setState({ stylePath: './assets/css/skin/skin-5.css' });
-        } else if (skin === 6) {
-            this.setState({ stylePath: './assets/css/skin/skin-6.css' });
-        } else if (skin === 7) {
-            this.setState({ stylePath: './assets/css/skin/skin-7.css' });
-        } else if (skin === 8) {
-            this.setState({ stylePath: './assets/css/skin/skin-8.css' });
-        } else if (skin === 9) {
-            this.setState({ stylePath: './assets/css/skin/skin-9.css' });
-        } else if (skin === 10) {
-            this.setState({ stylePath: './assets/css/skin/skin-10.css' });
-        }
-
-    };
-
-    render() {
-        const isSwitchActive = this.state.isSwitchActive;
-
-        return (
-            <>
-                <link rel="stylesheet" type="text/css" href={this.state.stylePath} />
-            </>
-        );
-    };
+  return (
+    <>
+      <link rel="stylesheet" type="text/css" href={stylePath} />
+    </>
+  );
 };
+
+/* =============================================================================
+/
+/    WEB DEVELOPER => CRISTHIAN VILLCA MAMANI
+/    LINKEDIN => https://www.linkedin.com/in/cristhian-villca-mamani-06933b251/
+/
+================================================================================ */ 
 
 export default Switcher;
